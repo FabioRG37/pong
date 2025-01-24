@@ -1,15 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class Window extends JFrame implements Runnable {
 
     public Graphics2D g2;
     public KL keyListener = new KL();
-    public Rect playOne, ai, ball;
+    public Rect playerOne, ai, ballRect;
     public PlayerController playerController;
+    public AIController aiController;
+    public Ball ball;
+    public Text leftScoreText, rightScoreText;
 
-    public Window(){
+    public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         this.setTitle(Constants.SCREEN_TITLE);
         this.setResizable(false);
@@ -19,15 +21,20 @@ public class Window extends JFrame implements Runnable {
         Constants.TOOLBAR_HEIGHT = this.getInsets().top;
         Constants.INSETS_BOTTOM = this.getInsets().bottom;
 
-        g2 = (Graphics2D)this.getGraphics();
 
-        playOne = new Rect(
+        leftScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
+                Constants.TEXT_X_POS, Constants.TEXT_Y_POS);
+        rightScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
+                Constants.SCREEN_WIDTH - Constants.TEXT_X_POS - Constants.TEXT_SIZE, Constants.TEXT_Y_POS);
+        g2 = (Graphics2D) this.getGraphics();
+
+        playerOne = new Rect(
                 Constants.HZ_PADDING,
                 40,
                 Constants.PADDLE_WIDTH,
                 Constants.PADDLE_HEIGHT,
                 Constants.PADDLE_COLOR);
-        playerController = new PlayerController(playOne, keyListener);
+        playerController = new PlayerController(playerOne, keyListener);
 
         ai = new Rect(
                 Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HZ_PADDING,
@@ -36,7 +43,7 @@ public class Window extends JFrame implements Runnable {
                 Constants.PADDLE_HEIGHT,
                 Constants.PADDLE_COLOR
         );
-        ball = new Rect(
+        ballRect = new Rect(
                 Constants.SCREEN_WIDTH / 2,
                 Constants.SCREEN_HEIGHT / 2,
                 Constants.BALL_WIDTH,
@@ -44,6 +51,9 @@ public class Window extends JFrame implements Runnable {
                 Constants.PADDLE_COLOR
         );
 
+        ball = new Ball(ballRect, playerOne, ai, leftScoreText, rightScoreText);
+
+        aiController = new AIController(new PlayerController(ai), ballRect);
     }
 
     public void update(double dt) {
@@ -53,17 +63,22 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
 
         playerController.update(dt);
+//        aiController.update(dt);
+        ball.update(dt);
     }
 
     public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        playOne.draw(g2);
+        leftScoreText.draw(g2);
+        rightScoreText.draw(g2);
+
+        playerOne.draw(g2);
         ai.draw(g2);
-        ball.draw(g2);
+        ballRect.draw(g2);
     }
 
     @Override
