@@ -10,6 +10,7 @@ public class Window extends JFrame implements Runnable {
     public AIController aiController;
     public Ball ball;
     public Text leftScoreText, rightScoreText;
+    public static boolean isRunning = true;
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -21,9 +22,8 @@ public class Window extends JFrame implements Runnable {
         Constants.TOOLBAR_HEIGHT = this.getInsets().top;
         Constants.INSETS_BOTTOM = this.getInsets().bottom;
 
-
         leftScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
-                Constants.TEXT_X_POS, Constants.TEXT_Y_POS);
+                Constants.TEXT_X_POS + 20, Constants.TEXT_Y_POS);
         rightScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
                 Constants.SCREEN_WIDTH - Constants.TEXT_X_POS - Constants.TEXT_SIZE, Constants.TEXT_Y_POS);
         g2 = (Graphics2D) this.getGraphics();
@@ -63,8 +63,12 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
 
         playerController.update(dt);
-//        aiController.update(dt);
+        aiController.update(dt);
         ball.update(dt);
+    }
+
+    public void stop() {
+        isRunning = false;
     }
 
     public void draw(Graphics g) {
@@ -84,7 +88,7 @@ public class Window extends JFrame implements Runnable {
     @Override
     public void run() {
         double lastFrameTime = 0.0;
-        while (true) {
+        while (isRunning) {
             double time = Time.getTime();
             double deltaTime = time - lastFrameTime;
             lastFrameTime = time;
@@ -92,5 +96,8 @@ public class Window extends JFrame implements Runnable {
             update(deltaTime);
 
         }
+
+        this.dispose();
+        return;
     }
 }

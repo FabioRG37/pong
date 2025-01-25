@@ -9,7 +9,7 @@ public class Constants {
     public static final double PADDLE_HEIGHT = 100;
     public static final Color PADDLE_COLOR = Color.WHITE;
     public static final double BALL_WIDTH = 10;
-    public static final double BALL_SPEED = 300;
+    public static final double BALL_SPEED = 375;
     public static final double HZ_PADDING = 40;
     public static final double PADDLE_SPEED = 250;
 
@@ -19,8 +19,8 @@ public class Constants {
     public static final double MAX_ANGLE = 45;
 
     public static final int TEXT_Y_POS = 70;
-    public static final int TEXT_X_POS = 10;
+    public static final int TEXT_X_POS = 60;
     public static final int TEXT_SIZE = 40;
 
-    public static final int WIN_SCORE = 1;
+    public static final int WIN_SCORE = 11;
 }

@@ -20,6 +20,8 @@ public class PlayerController {
                 moveUp(dt);
             } else if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
                 moveDown(dt);
+            } else if (keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                Main.changeState(0);
             }
         }
     }
