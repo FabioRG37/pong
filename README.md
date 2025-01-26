@@ -1,4 +1,4 @@
-# pac-man
+# pong
 
 Este é o um projeto de um jogo no estílo **pong**, com o objetivos meramente didáticos.
 
