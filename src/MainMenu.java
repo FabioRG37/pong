@@ -9,9 +9,6 @@ public class MainMenu extends JFrame implements Runnable {
     public Text startGame, exitGame, pong;
     public boolean isRunning = true;
 
-    public Rect hzLine;
-    public Rect vtLine;
-
     public MainMenu() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         this.setTitle(Constants.SCREEN_TITLE);
@@ -21,20 +18,6 @@ public class MainMenu extends JFrame implements Runnable {
         this.addKeyListener(keyListener);
         this.addMouseListener(mouseListener);
         this.addMouseMotionListener(mouseListener);
-
-        hzLine = new Rect(
-                Constants.SCREEN_WIDTH / 2.0,
-                0,
-                1,
-                Constants.SCREEN_HEIGHT,
-                Constants.PADDLE_COLOR);
-
-        vtLine = new Rect(
-                0,
-                Constants.SCREEN_HEIGHT / 2.0,
-                Constants.SCREEN_WIDTH,
-                1,
-                Constants.PADDLE_COLOR);
 
         this.pong = new Text("Pong", new Font("Times New Roman", Font.PLAIN, 100),
                 Constants.SCREEN_WIDTH / 2.0 - 100, 230, Color.WHITE);
@@ -85,8 +68,6 @@ public class MainMenu extends JFrame implements Runnable {
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        hzLine.draw(g2);
-        vtLine.draw(g2);
         pong.draw(g2);
         startGame.draw(g2);
         exitGame.draw(g2);
